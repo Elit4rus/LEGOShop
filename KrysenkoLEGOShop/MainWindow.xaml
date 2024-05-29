@@ -1,0 +1,80 @@
+﻿<Window x:Class="KrysenkoLEGOShop.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:KrysenkoLEGOShop"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="650" Width="1000" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*"/>
+                <RowDefinition Height="9*"/>
+            </Grid.RowDefinitions>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="160"/>
+                </Grid.ColumnDefinitions>
+                <Button Name="AddProductBtn" Grid.Row="1" Grid.Column="1" Margin="0 0 20 0" Content="Добавить товар" FontSize="16" Click="AddProductBtn_Click"/>
+            </Grid>
+            <!-- Поиск -->
+            <TextBox x:Name="StreachTb" Height="30" Width="300" Text="Введите название:" 
+                     GotFocus="StreachTb_GotFocus" LostFocus="StreachTb_LostFocus" SelectionChanged="StreachTb_SelectionChanged" FontSize="16"/>
+            <ListBox Margin="20 0 20 20" Name="Lst" Grid.Row="1" >
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <Border CornerRadius="15">
+                            <!-- Разметка для товаров -->
+                            <Grid Height="200" Width="800">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40*"/>
+                                    <ColumnDefinition Width="60*"/>
+                                </Grid.ColumnDefinitions>
+                                <!-- Данный грид отвечает только за правую сторону-->
+                                <Grid Grid.Column="1">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="2*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <!-- Контейнер для названия и артикула -->
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{Binding Title}" FontWeight="Bold"/>
+                                        <TextBlock Text=", " FontWeight="Bold"/>
+                                        <TextBlock Text="{Binding ID}"/>
+                                    </StackPanel>
+                                    <!-- Описание -->
+                                    <TextBlock Text="Описание:" Grid.Row="1"/>
+                                    <!-- Описание товара из бд -->
+                                    <TextBlock Text="{Binding Description}" Grid.Row="2" TextWrapping="Wrap"/>
+                                    <!-- Категория товара -->
+                                    <TextBlock Grid.Row="3" Text="{Binding Category.Title, StringFormat='Категория: {0}' }"/>
+                                    <StackPanel Orientation="Horizontal" Grid.Row="4">
+                                        <!-- Цена товара -->
+                                        <TextBlock Text="{Binding Cost, StringFormat='Цена: {0} руб.'}"/>
+                                        <!-- Статус товара -->
+                                        <TextBlock Text="{Binding Status.Title, StringFormat='Статус: {0}' }" Margin="100 0 20 0"/>
+                                    </StackPanel>
+
+                                </Grid>
+                            </Grid>
+                        </Border>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+            <!-- TextBlock когда товар отсутствует -->
+            <TextBlock x:Name="TbNullSearch" Grid.Row="1" 
+                       VerticalAlignment="Center" HorizontalAlignment="Center" 
+                       FontSize="40" Text="Такого товара нет" Visibility="Collapsed"/>
+        </Grid>
+    </Grid>
+</Window>
